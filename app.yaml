@@ -1,0 +1,21 @@
+runtime: python39
+
+entrypoint: gunicorn -b :$PORT app:app
+
+env_variables:
+  GCP_PROJECT: "csl7510-project"
+  GCS_BUCKET: "csl7510-project-staging"
+  FLASK_ENV: "production"
+  FLASK_APP: "main.py"
+
+service: csl7510
+
+handlers:
+  - url: /static
+    static_dir: "static"
+
+  - url: /.*
+    script: app.app
+    secure: never
+
+
