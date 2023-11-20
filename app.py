@@ -299,14 +299,14 @@ def register():
         password = request.form['password']
         email = request.form['email']
         firstName = request.form['firstName']
-        lastName = request.form['lastName']
-        address1 = request.form['address1']
-        address2 = request.form['address2']
-        zipcode = request.form['zipcode']
-        city = request.form['city']
-        state = request.form['state']
-        country = request.form['country']
-        phone = request.form['phone']
+        lastName = "-97"
+        address1 = "-97"
+        address2 = "-97"
+        zipcode = "-97"
+        city = "-97"
+        state = "-97"
+        country = "-97"
+        phone = "-97"
 
         with sqlite3.connect('database.db') as con:
             try:
