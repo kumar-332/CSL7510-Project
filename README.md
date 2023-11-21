@@ -7,7 +7,7 @@
 Run `database.py` to create all tables and there schema
 
 ## Run the flask app
-1. Run `flask run --host=0.0.0.0` and open broswer and check http://127.0.0.1:5000
+1. Run `flask run --host=0.0.0.0` and open broswer and check http://127.0.0.1:5000 on the local
 2. Register user by clicking on the login button
-3. http://127.0.0.1:5000/add to add items to the platfrom
+3. https://myservices-pghspzoroq-uc.a.run.app/add to add items to the platfrom
    
