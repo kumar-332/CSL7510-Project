@@ -2,11 +2,8 @@ from flask import *
 from urllib.parse import quote as url_quote
 from flask import Flask, render_template, request, session, redirect, url_for
 
-# Uncomment the line below to import secure_filename
 from werkzeug.utils import secure_filename
 import sqlite3, hashlib, os
-# from werkzeug.utils import secure_filename
-
 app = Flask(__name__)
 app.secret_key = 'random string'
 UPLOAD_FOLDER = 'static/uploads'

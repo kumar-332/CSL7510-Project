@@ -6,7 +6,7 @@ env_variables:
   GCP_PROJECT: "csl7510-project"
   GCS_BUCKET: "csl7510-project-staging"
   FLASK_ENV: "production"
-  FLASK_APP: "main.py"
+  FLASK_APP: "app.py"
 
 service: csl7510
 
