@@ -1,42 +1,27 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Welcome</title>
-<!--<link rel="stylesheet" href={{ url_for('static', filename='css/home.css') }} />-->
+<title>Profile Home</title>
+<link rel="stylesheet" href={{ url_for('static', filename='css/profileHome.css') }} />
 <link rel="stylesheet" href={{ url_for('static', filename='css/topStyle.css') }} />
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-		<a href="/">
+<div id="title">
+	<a href="/">
 		<img id="logo" src= {{ url_for('static', filename='images/logo.png') }} />
 	</a>
-	<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-		{% for row in categoryData %}
-		<li class="nav-item">
-			<a class="nav-link" href="/displayCategory?categoryId={{row[0]}}" class="sr-only">{{row[1]}}</span></a>
-		</li>
-		{% endfor %}
-	</ul>
+	<form>
+		<input id="searchBox" type="text" name="searchQuery">
+		<input id="searchButton" type="submit" value="Search">
+	</form>
 
-		<form class="form-inline">
-			<input class="form-control" type="search" placeholder="Search" aria-label="Search">
-		</form>
-
-	<div id="kart" class="topnav-right">
-		<a class="link" href="/cart">
-			<img src={{url_for('static', filename='images/cart-logo.png')}} id="cartIcon" />
-			CART {{noOfItems}}
-		</a>
-	</div>
 	{% if not loggedIn %}
-	<div id="signInButton" class="topnav-right">
+	<div id="signInButton">
 		<a class="link" href="/loginForm">Sign In</a>
 	</div>
 	{% else %}
 	<div class="dropdown">
-		<button class="dropbtn"><br>{{firstName}}</button>
+		<button class="dropbtn">Hello, <br>{{firstName}}</button>
 		<div class="dropdown-content">
 			<a href="/account/orders">Your orders</a>
 			<a href="/account/profile">Your profile</a>
@@ -45,45 +30,19 @@
 		</div>
 	</div>
 	{% endif %}
-	</div>
-</nav>
-
-
-
-
-<div class="display">
-
-	<div>
-
-		{% for data in itemData %}
-		<table>
-			<tr id="productName">
-				{% for row in data %}
-				<td>
-					{{row[1]}}
-				</td>
-				{% endfor %}
-			</tr>
-			<tr id="productImage">
-				{% for row in data %}
-				<td>
-					<a href="/productDescription?productId={{row[0]}}">
-						<img src={{ url_for('static', filename='uploads/' + row[4]) }} id="itemImage" />
-					</a>
-				</td>
-				{% endfor %}
-			</tr>
-			<tr id="productPrice">
-				{% for row in data %}
-				<td>
-					Rs {{row[2]}}
-				</td>
-				{% endfor %}
-			</tr>
-		</table>
-		{% endfor %}
+	<div id="kart">
+		<a class="link" href="/cart">
+			<img src={{url_for('static', filename='images/shoppingCart.png')}} id="cartIcon" />
+			CART {{noOfItems}}
+		</a>
 	</div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<div class="display">
+	<a href="/account/profile/view">View Profile</a><br>
+	<a href="/account/profile/edit">Edit Profile</a><br>
+	<a href="/account/profile/changePassword">Change password</a>
+</div>
 </body>
 </html>
+

@@ -36,7 +36,7 @@ def root():
         cur.execute('SELECT categoryId, name FROM categories')
         categoryData = cur.fetchall()
     itemData = parse(itemData)   
-    return render_template('home.html', itemData=itemData, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryData=categoryData)
+    return render_template('index.html', itemData=itemData, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryData=categoryData)
 
 @app.route("/add")
 def admin():
@@ -75,30 +75,7 @@ def addItem():
         print(msg)
         return redirect(url_for('root'))
 
-@app.route("/remove")
-def remove():
-    with sqlite3.connect('database.db') as conn:
-        cur = conn.cursor()
-        cur.execute('SELECT productId, name, price, description, image, stock FROM products')
-        data = cur.fetchall()
-    conn.close()
-    return render_template('remove.html', data=data)
 
-@app.route("/removeItem")
-def removeItem():
-    productId = request.args.get('productId')
-    with sqlite3.connect('database.db') as conn:
-        try:
-            cur = conn.cursor()
-            cur.execute('DELETE FROM products WHERE productID = ?', (productId, ))
-            conn.commit()
-            msg = "Deleted successsfully"
-        except:
-            conn.rollback()
-            msg = "Error occured"
-    conn.close()
-    print(msg)
-    return redirect(url_for('root'))
 
 @app.route("/displayCategory")
 def displayCategory():
@@ -111,55 +88,15 @@ def displayCategory():
         conn.close()
         categoryName = data[0][4]
         data = parse(data)
-        return render_template('displayCategory.html', data=data, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryName=categoryName)
+        return render_template('category.html', data=data, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryName=categoryName)
 
 @app.route("/account/profile")
 def profileHome():
     if 'email' not in session:
         return redirect(url_for('root'))
     loggedIn, firstName, noOfItems = getLoginDetails()
-    return render_template("profileHome.html", loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
+    return render_template("home.html", loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
 
-@app.route("/account/profile/edit")
-def editProfile():
-    if 'email' not in session:
-        return redirect(url_for('root'))
-    loggedIn, firstName, noOfItems = getLoginDetails()
-    with sqlite3.connect('database.db') as conn:
-        cur = conn.cursor()
-        cur.execute("SELECT userId, email, firstName, lastName, address1, address2, zipcode, city, state, country, phone FROM users WHERE email = ?", (session['email'], ))
-        profileData = cur.fetchone()
-    conn.close()
-    return render_template("editProfile.html", profileData=profileData, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
-
-@app.route("/account/profile/changePassword", methods=["GET", "POST"])
-def changePassword():
-    if 'email' not in session:
-        return redirect(url_for('loginForm'))
-    if request.method == "POST":
-        oldPassword = request.form['oldpassword']
-        oldPassword = hashlib.md5(oldPassword.encode()).hexdigest()
-        newPassword = request.form['newpassword']
-        newPassword = hashlib.md5(newPassword.encode()).hexdigest()
-        with sqlite3.connect('database.db') as conn:
-            cur = conn.cursor()
-            cur.execute("SELECT userId, password FROM users WHERE email = ?", (session['email'], ))
-            userId, password = cur.fetchone()
-            if (password == oldPassword):
-                try:
-                    cur.execute("UPDATE users SET password = ? WHERE userId = ?", (newPassword, userId))
-                    conn.commit()
-                    msg="Changed successfully"
-                except:
-                    conn.rollback()
-                    msg = "Failed"
-                return render_template("changePassword.html", msg=msg)
-            else:
-                msg = "Wrong password"
-        conn.close()
-        return render_template("changePassword.html", msg=msg)
-    else:
-        return render_template("changePassword.html")
 
 @app.route("/updateProfile", methods=["GET", "POST"])
 def updateProfile():
@@ -215,7 +152,7 @@ def productDescription():
         cur.execute('SELECT productId, name, price, description, image, stock FROM products WHERE productId = ?', (productId, ))
         productData = cur.fetchone()
     conn.close()
-    return render_template("productDescription.html", data=productData, loggedIn = loggedIn, firstName = firstName, noOfItems = noOfItems)
+    return render_template("product.html", data=productData, loggedIn = loggedIn, firstName = firstName, noOfItems = noOfItems)
 
 @app.route("/addToCart")
 def addToCart():
