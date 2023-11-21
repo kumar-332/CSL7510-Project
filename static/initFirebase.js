@@ -1,0 +1,11 @@
+
+var config = {
+    apiKey: "AIzaSyB8fCZOKc5aHWMiCwaFsArHzq7j16ukke8",
+    authDomain: "csl7510-project.firebaseapp.com",
+    databaseURL: "https://csl7510-project-default-rtdb.firebaseio.com/",
+    projectId: "csl7510-project",
+    storageBucket: "csl7510-project-staging",
+    messagingSenderId: "770323534779"
+};
+
+firebase.initializeApp(config);
